@@ -1,7 +1,7 @@
-import { Router } from "express";
-import permisosRoutes from "./permisos/permisos.routes";
-const router = Router()
+import { Router } from 'express';
+import docentesRoutes from './docentes/docente.routes';
+const router = Router();
 
-router.use('/permisos', permisosRoutes)
+router.use('/docentes', docentesRoutes);
 
-export default router
+export default router;

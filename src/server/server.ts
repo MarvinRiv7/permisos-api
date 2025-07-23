@@ -1,17 +1,24 @@
 import express, { Application } from 'express';
 import { Env } from '../types/Env';
 import  permisosRoutes  from "../modules/modules.routes";
+import cors from "cors";
+import { dbConnection } from '../database/config';
 
 class Server {
   private app: Application;
-  private port: Env;
+  private port: string;
   constructor() {
     this.app = express();
-    this.port = { PORT: Number(process.env.PORT || 8081) };
+    this.port = process.env.PORT || '8081' ;
+    this.conectarDB();
     this.middlewares();
     this.routes();
   }
+    async conectarDB() {
+    await dbConnection();
+  }
   middlewares() {
+    this.app.use(cors())
     this.app.use(express.static('public'));
     this.app.use(express.json())
   }
@@ -19,8 +26,8 @@ class Server {
     this.app.use('/api', permisosRoutes)
   }
   listen() {
-    this.app.listen(this.port.PORT, () => {
-      console.log(`Server is running on portkkkk${this.port.PORT}`);
+    this.app.listen(this.port, () => {
+      console.log(`Server is running on port${this.port}`);
     });
   }
 }

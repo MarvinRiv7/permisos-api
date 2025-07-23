@@ -4,5 +4,6 @@ exports.env = void 0;
 require("dotenv/config");
 exports.env = {
     PORT: Number(process.env.PORT || 8081),
+    MONGO_CNN: process.env.MONGO_CNN || '',
 };
 //# sourceMappingURL=env.js.map
