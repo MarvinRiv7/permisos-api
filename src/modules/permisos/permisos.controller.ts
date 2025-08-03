@@ -89,7 +89,7 @@ export const eliminarPermiso = async (req: Request, res: Response) => {
     eliminarPermiso,
   });
 };
-// controllers/permisos.controller.ts
+
 export const getPermisosPorDocenteYMes = async (
   req: Request,
   res: Response,

@@ -50,7 +50,7 @@ router.post(
     check('autoridadConcede', 'La autoridad que concede es obligatoria')
       .not()
       .isEmpty(),
-    check('tiempo', 'El tiempo debe ser al menos 1 día').not().isEmpty(),
+   check('tiempo', 'El tiempo debe ser al menos 1 y no decimal').isInt({ min: 1 }),
     check('motivo', 'El motivo del permiso es obligatorio').not().isEmpty(),
     validarCampos,
   ],
