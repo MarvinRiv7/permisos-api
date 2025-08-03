@@ -10,11 +10,12 @@ export const docenteSchema = new Schema<IDocentes>({
     apellido: {
         type: String,
         required: [true, 'EL apellido es obligatorio']
-    },
-    turno: {
-        type: String,
-        required: [true, 'EL turno es obligatorio']
     }
 })
+
+docenteSchema.methods.toJSON = function() {
+    const {__v, ...docente} = this.toObject()
+    return docente
+}
 
 export const Docente = model<IDocentes>('Docente', docenteSchema)

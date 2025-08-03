@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import { Env } from '../types/Env';
 import  permisosRoutes  from "../modules/modules.routes";
+import  docentesRoutes  from "../modules/modules.routes";
 import cors from "cors";
 import { dbConnection } from '../database/config';
 
@@ -24,6 +25,7 @@ class Server {
   }
   routes() {
     this.app.use('/api', permisosRoutes)
+    this.app.use('/api', docentesRoutes)
   }
   listen() {
     this.app.listen(this.port, () => {

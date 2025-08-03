@@ -1,18 +1,20 @@
 import { Request, Response } from 'express';
 import { Docente } from './docente.models';
+import { body } from 'express-validator';
 
-export const docentesget = (req: Request, res: Response) => {
-  const params = req.query;
+export const docentesget = async (req: Request, res: Response) => {
+  // const params = req.query;
+  const docentes = await Docente.find();
 
   res.status(200).json({
     msg: 'Get',
-    params,
+    docentes,
   });
 };
 export const docentesPost = async (req: Request, res: Response) => {
   try {
-    const { nombre, apellido, turno } = req.body;
-    const docente = new Docente({nombre, apellido, turno});
+    const { nombre, apellido } = req.body;
+    const docente = new Docente({ nombre, apellido });
     await docente.save();
 
     res.status(200).json({
@@ -25,21 +27,22 @@ export const docentesPost = async (req: Request, res: Response) => {
     });
   }
 };
-export const docentesPut = (req: Request, res: Response) => {
-  const id = req.params.id;
+export const docentesPut = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { _id, ...resto } = req.body;
+
+  const docente = await Docente.findByIdAndUpdate(id, resto);
 
   res.status(200).json({
     msg: 'PUT',
-    id,
+    docente,
   });
 };
-export const docentesDelete = (req: Request, res: Response) => {
-  const { nombre, apellido, turno } = req.body;
-
+export const docentesDelete = async (req: Request, res: Response) => {
+  const {id}  = req.params;
+  const docente = await Docente.findByIdAndDelete(id)
   res.status(200).json({
-    msg: 'POST',
-    nombre,
-    apellido,
-    turno,
+    msg: 'DELETE',
+    docente
   });
 };
