@@ -17,6 +17,10 @@ router.put('/:id', [
     (0, express_validator_1.check)('id').custom(db_validators_1.existeDocentePorId),
     validar_campos_1.validarCampos,
 ], docente_controller_1.docentesPut);
-router.delete('/:id', docente_controller_1.docentesDelete);
+router.delete('/:id', [
+    (0, express_validator_1.check)('id', 'No es un id valido').isMongoId(),
+    (0, express_validator_1.check)('id').custom(db_validators_1.existeDocentePorId),
+    validar_campos_1.validarCampos,
+], docente_controller_1.docentesDelete);
 exports.default = router;
 //# sourceMappingURL=docente.routes.js.map

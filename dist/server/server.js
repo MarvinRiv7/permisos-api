@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const modules_routes_1 = __importDefault(require("../modules/modules.routes"));
+const modules_routes_2 = __importDefault(require("../modules/modules.routes"));
 const cors_1 = __importDefault(require("cors"));
 const config_1 = require("../database/config");
 class Server {
@@ -36,6 +37,7 @@ class Server {
     }
     routes() {
         this.app.use('/api', modules_routes_1.default);
+        this.app.use('/api', modules_routes_2.default);
     }
     listen() {
         this.app.listen(this.port, () => {

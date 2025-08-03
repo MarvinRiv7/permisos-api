@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.existeDocentePorId = exports.existeNombre = void 0;
+exports.existePermisoPoId = exports.existeDocentePorId = exports.existeNombre = void 0;
 const docente_models_1 = require("../modules/docentes/docente.models");
+const permisos_models_1 = require("../modules/permisos/permisos.models");
 const existeNombre = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (nombre = '') {
     const nombreExiste = yield docente_models_1.Docente.findOne({ nombre });
     if (nombreExiste) {
@@ -25,4 +26,11 @@ const existeDocentePorId = (...args_1) => __awaiter(void 0, [...args_1], void 0,
     }
 });
 exports.existeDocentePorId = existeDocentePorId;
+const existePermisoPoId = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const existePermiso = yield permisos_models_1.Permiso.findById(id);
+    if (!existePermiso) {
+        throw new Error(`El id: ${id} no existe`);
+    }
+});
+exports.existePermisoPoId = existePermisoPoId;
 //# sourceMappingURL=db-validators.js.map

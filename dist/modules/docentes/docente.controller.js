@@ -22,14 +22,12 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.docentesDelete = exports.docentesPut = exports.docentesPost = exports.docentesget = void 0;
 const docente_models_1 = require("./docente.models");
-const express_validator_1 = require("express-validator");
 const docentesget = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // const params = req.query;
-    const { limite = 5, desde = 0 } = req.query;
-    const docentes = yield docente_models_1.Docente.find().skip(Number(desde)).limit(Number(limite));
+    const docentes = yield docente_models_1.Docente.find();
     res.status(200).json({
         msg: 'Get',
-        docentes
+        docentes,
     });
 });
 exports.docentesget = docentesget;
@@ -56,16 +54,17 @@ const docentesPut = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const docente = yield docente_models_1.Docente.findByIdAndUpdate(id, resto);
     res.status(200).json({
         msg: 'PUT',
-        docente
+        docente,
     });
 });
 exports.docentesPut = docentesPut;
-const docentesDelete = (req, res) => {
-    const { nombre, apellido, turno } = req.body;
+const docentesDelete = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const docente = yield docente_models_1.Docente.findByIdAndDelete(id);
     res.status(200).json({
-        msg: 'POST',
-        body: express_validator_1.body,
+        msg: 'DELETE',
+        docente
     });
-};
+});
 exports.docentesDelete = docentesDelete;
 //# sourceMappingURL=docente.controller.js.map
