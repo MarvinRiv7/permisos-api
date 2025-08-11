@@ -22,8 +22,8 @@ class Server {
     this.app.use(
       cors({
         origin: [
-          'http://localhost:5173',
-          'https://docentes-permisos.vercel.app',
+          'http://localhost:5173/',
+          'https://docentes-permisos.vercel.app/',
         ],
 
         credentials: true,
