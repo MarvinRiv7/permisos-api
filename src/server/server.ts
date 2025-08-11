@@ -19,19 +19,7 @@ class Server {
     await dbConnection();
   }
   middlewares() {
-    this.app.use(
-      cors({
-        origin: [
-          'http://localhost:5174/',
-          'http://localhost:5174/docentes',
-          'http://localhost:5174/permisos',
-          'http://localhost:5174/buscar',
-          'https://docentes-permisos.vercel.app/',
-        ],
-
-        credentials: true,
-      }),
-    );
+    this.app.use(cors());
     this.app.use(express.static('public'));
     this.app.use(express.json());
   }
