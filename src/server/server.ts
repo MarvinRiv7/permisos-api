@@ -23,6 +23,9 @@ class Server {
       cors({
         origin: [
           'http://localhost:5174/',
+          'http://localhost:5174/docentes',
+          'http://localhost:5174/permisos',
+          'http://localhost:5174/buscar',
           'https://docentes-permisos.vercel.app/',
         ],
 
