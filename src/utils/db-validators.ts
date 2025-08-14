@@ -1,10 +1,10 @@
 import { Docente } from '../modules/docentes/docente.models';
 import { Permiso } from '../modules/permisos/permisos.models';
 
-export const existeNombre = async (nombre: string = '') => {
-  const nombreExiste = await Docente.findOne({ nombre });
-  if (nombreExiste) {
-    throw new Error(`El nombre ${nombre} ya está registrado`);
+export const existeNIP = async (nip: number) => {
+  const nipExiste = await Docente.findOne({ nip});
+  if (nipExiste) {
+    throw new Error(`El NIP ${nip} ya está registrado`);
   }
 };
 export const existeDocentePorId = async (id: string = '') => {
@@ -19,3 +19,4 @@ export const existePermisoPoId = async (id: string) => {
     throw new Error(`El id: ${id} no existe`);
   }
 };
+

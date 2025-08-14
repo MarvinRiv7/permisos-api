@@ -4,8 +4,11 @@ export interface IPermisos {
   nombreDocente: Types.ObjectId;
   fechaPermiso: Date;
   CGS: boolean;
-  autoridadConcede: 'ISBM' | 'Direccion';
+  autoridadConcede: 'ISBM' | 'Direccion' | 'Departamental de educacion';
   tiempo: number;
-  motivo: 'Salud' | 'Incapacidad' | 'Consulta Medica' | 'Personal';
-  turno: 'Mañana' | 'Tarde'
+  unidadTiempo: 'Horas' | 'Dias';
+  motivo: 'Duelo' | 'Incapacidad' | 'Consulta Medica' | 'Personal' | 'Maternidad';
+  turno: 'Mañana' | 'Tarde' | 'Mañana y Tarde';
+  observaciones?: string;
+  conCertificadoMedico?: boolean
 }

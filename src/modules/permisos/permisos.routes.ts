@@ -5,6 +5,7 @@ import {
   eliminarPermiso,
   getPermiso,
   getPermisos,
+  getPermisosPorDocenteYAnio,
   getPermisosPorDocenteYMes,
 } from './permisos.controller';
 import { validarCampos } from '../../middlewares/validar-campos';
@@ -37,6 +38,17 @@ router.get(
   ],
   getPermisosPorDocenteYMes,
 );
+
+router.get(
+  '/por-docente/:id/year/:anio',
+  [
+    check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(existeDocentePorId),
+    validarCampos,
+  ],
+  getPermisosPorDocenteYAnio,
+);
+
 //Crear Permiso
 router.post(
   '/',
@@ -50,8 +62,11 @@ router.post(
     check('autoridadConcede', 'La autoridad que concede es obligatoria')
       .not()
       .isEmpty(),
-   check('tiempo', 'El tiempo debe ser al menos 1 y no decimal').isInt({ min: 1 }),
+    check('tiempo', 'El tiempo debe ser al menos 1 y no decimal').isInt({
+      min: 1,
+    }),
     check('motivo', 'El motivo del permiso es obligatorio').not().isEmpty(),
+
     validarCampos,
   ],
   crearPermiso,
@@ -66,7 +81,7 @@ router.put(
     check('id').custom(existePermisoPoId),
     validarCampos,
   ],
-  actualizarPermiso
+  actualizarPermiso,
 );
 //Eliminar Permiso
 router.delete(

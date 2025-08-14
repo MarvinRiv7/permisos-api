@@ -1,9 +1,16 @@
 import { model, Schema } from 'mongoose';
 import { IPermisos } from './permisos.interface';
 
-const turnoEnum = ['Mañana', 'Tarde'];
-const autoridadEnum = ['ISBM', 'Direccion'];
-const motivoEnum = ['Salud', 'Incapacidad', 'Consulta Medica', 'Personal'];
+const turnoEnum = ['Mañana', 'Tarde', 'Mañana y Tarde'];
+const autoridadEnum = ['ISBM', 'Direccion', 'Departamental de educacion'];
+const motivoEnum = [
+  'Duelo',
+  'Incapacidad',
+  'Consulta Medica',
+  'Personal',
+  'Maternidad',
+];
+const unidadTiempoEnum = ['Horas', 'Dias'];
 
 export const permisoSchema = new Schema<IPermisos>(
   {
@@ -35,30 +42,53 @@ export const permisoSchema = new Schema<IPermisos>(
       enum: {
         values: autoridadEnum,
         message:
-          'Autoridad inválida. Valores permitidos: ' +
-          autoridadEnum.join(', '),
+          'Autoridad inválida. Valores permitidos: ' + autoridadEnum.join(', '),
       },
     },
     tiempo: {
       type: Number,
       min: [1, 'El tiempo debe ser al menos 1 día'],
     },
+    unidadTiempo: {
+      type: String,
+      enum: {
+        values: unidadTiempoEnum,
+      },
+      default: 'Dias',
+    },
     motivo: {
       type: String,
       enum: {
         values: motivoEnum,
         message:
-          'Motivo inválido. Valores permitidos: ' +
-          motivoEnum.join(', '),
+          'Motivo inválido. Valores permitidos: ' + motivoEnum.join(', '),
       },
       required: true,
+    },
+    conCertificadoMedico: {
+      type: Boolean,
+      default: false,
+      validate: {
+        validator: function (value: boolean) {
+          // Solo permitimos que sea true si motivo es "Consulta Medica"
+          if (value === true && this.motivo !== 'Consulta Medica') {
+            return false;
+          }
+          return true;
+        },
+        message:
+          'El campo conCertificadoMedico solo puede ser true si el motivo es Consulta Medica',
+      },
+    },
+    observaciones: {
+      type: String,
     },
   },
   { timestamps: true },
 );
-permisoSchema.methods.toJSON = function() {
-  const {__v, createdAt, updatedAt, ...permiso} = this.toObject()
-  return permiso
-}
+permisoSchema.methods.toJSON = function () {
+  const { __v, createdAt, updatedAt, ...permiso } = this.toObject();
+  return permiso;
+};
 
 export const Permiso = model<IPermisos>('Permiso', permisoSchema);
