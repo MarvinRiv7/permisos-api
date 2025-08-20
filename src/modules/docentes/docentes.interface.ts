@@ -5,8 +5,8 @@ export interface IDocentes {
   categoria: number; 
   nip: number;
   year: number;
-  partidas: number;
-  subPartidas: number;
+  partidas: string;
+  subPartidas: string;
   fechaIngreso: Date;
   especialidad: string;
 }

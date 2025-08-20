@@ -34,7 +34,9 @@ export const docentesPost = async (req: Request, res: Response) => {
       });
     }
     const [yearNum, monthNum, dayNum] = fechaIngreso.split('-').map(Number);
-    const fechaIngresoLocal = new Date(yearNum, monthNum - 1, dayNum, 0, 0, 0);
+    const fechaIngresoLocal = new Date(
+      Date.UTC(yearNum, monthNum - 1, dayNum, 0, 0, 0, 0),
+    );
 
     const docente = new Docente({
       nombre,
@@ -64,40 +66,10 @@ export const docentesPost = async (req: Request, res: Response) => {
 };
 
 export const docentesPut = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { _id, fechaIngreso, ...resto } = req.body;
-
-    let fechaIngresoLocal;
-    if (fechaIngreso && typeof fechaIngreso === 'string') {
-      const [yearNum, monthNum, dayNum] = fechaIngreso.split('-').map(Number);
-      fechaIngresoLocal = new Date(yearNum, monthNum - 1, dayNum, 0, 0, 0);
-    }
-
-    const updateData = {
-      ...resto,
-      ...(fechaIngresoLocal && { fechaIngreso: fechaIngresoLocal }),
-    };
-
-    const docente = await Docente.findByIdAndUpdate(id, updateData, {
-      new: true,
-    });
-
-    if (!docente) {
-      return res.status(404).json({ msg: 'Docente no encontrado' });
-    }
-
-    res.status(200).json({
-      msg: 'PUT',
-      docente,
-    });
-  } catch (error: any) {
-    console.error('Error en docentesPut:', error);
-    res.status(500).json({
-      msg: 'Error al actualizar el docente',
-      error: error.message,
-    });
-  }
+  const { id } = req.params;
+  const { _id, ...data } = req.body;
+  const docente = await Docente.findByIdAndUpdate(id, data, {new: true})
+  return res.json({docente})
 };
 
 export const docentesDelete = async (req: Request, res: Response) => {

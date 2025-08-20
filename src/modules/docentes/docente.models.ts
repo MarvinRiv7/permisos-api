@@ -35,14 +35,14 @@ export const docenteSchema = new Schema<IDocentes>(
       min: 1900,
     },
     partidas: {
-      type: Number,
+      type: String,
       required: true,
-      min: 0,
+     
     },
     subPartidas: {
-      type: Number,
+      type: String,
       required: true,
-      min: 0,
+    
     },
     fechaIngreso: {
       type: Date,
