@@ -67,9 +67,9 @@ export const crearPermiso = async (req: Request, res: Response) => {
       fechaPermiso: { $gte: fechaInicio, $lte: fechaFin },
     });
 
-    if (cantidadPermisos >= 2) {
+    if (cantidadPermisos >= 1) {
       return res.status(400).json({
-        message: "El docente ya tiene 2 permisos registrados para este día.",
+        message: "El docente ya tiene 1 permiso registrados para este día.",
       });
     }
 

@@ -71,7 +71,11 @@ export const permisoSchema = new Schema<IPermisos>(
       validate: {
         validator: function (value: boolean) {
           // Solo permitimos que sea true si motivo es "Consulta Medica"
-          if (value === true && this.motivo !== 'Consulta Medica') {
+          if (
+            value === true &&
+            this.motivo !== 'Consulta Medica' &&
+            this.motivo !== 'Incapacidad'
+          ) {
             return false;
           }
           return true;

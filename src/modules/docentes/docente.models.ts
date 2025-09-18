@@ -25,9 +25,10 @@ export const docenteSchema = new Schema<IDocentes>(
       required: true,
     },
     nip: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
+       match: [/^\d{6,10}$/, 'El NIP debe tener entre 6 y 10 dígitos numéricos']
     },
     year: {
       type: Number,

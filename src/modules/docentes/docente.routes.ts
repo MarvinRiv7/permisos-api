@@ -28,10 +28,8 @@ router.post(
       .isInt({ min: 1 }),
     check('nip')
       .notEmpty()
-      .withMessage('El NIP es obligatorio')
-      .isLength({ min: 6, max: 10 })
-      .withMessage('El NIP debe tener entre 6 y 10 dígitos')
-      .isNumeric()
+      .matches(/^\d{6,10}$/)
+      .withMessage('El NIP debe tener entre 6 y 10 dígitos numéricos')
       .withMessage('El NIP solo debe contener números')
       .custom(existeNIP),
 
@@ -76,8 +74,8 @@ router.put(
       .isInt({ min: 1 }),
     check('nip')
       .notEmpty()
-      .isLength({ min: 6, max: 10 })
-      .isNumeric(),
+      .matches(/^\d{6,10}$/)
+      .withMessage('El NIP debe tener entre 6 y 10 dígitos numéricos'),
     check('year').notEmpty().isInt({ min: 1990 }),
     check('partidas')
       .notEmpty()
